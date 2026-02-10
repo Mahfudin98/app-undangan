@@ -19,9 +19,11 @@ class Invitation extends Model
         'status',
         'published_at',
         'active_until',
+        'published_schema',
     ];
 
     protected $casts = [
+        'published_schema' => 'array',
         'editor_expires_at' => 'datetime',
         'published_at' => 'datetime',
         'active_until' => 'datetime',
@@ -66,5 +68,10 @@ class Invitation extends Model
         }
 
         return $slug;
+    }
+
+    public function canPublish()
+    {
+        return $this->status === 'active';
     }
 }

@@ -12,7 +12,11 @@ export default function SortableNode({ node, isSelected, onClick }: Props) {
     const { attributes, listeners, setNodeRef, transform, transition } =
         useSortable({ id: node.id });
 
-    const style = { transform: CSS.Transform.toString(transform), transition };
+    const style = {
+        transform: CSS.Transform.toString(transform),
+        transition,
+        ...node.style,
+    };
 
     const ring = isSelected ? 'ring-2 ring-primary' : '';
 
@@ -24,9 +28,45 @@ export default function SortableNode({ node, isSelected, onClick }: Props) {
                 style={style}
                 {...attributes}
                 {...listeners}
-                onClick={onClick}
-                className={`cursor-move bg-white p-2 ${ring}`}
-            />
+                onClick={(e) => {
+                    e.stopPropagation();
+                    onClick();
+                }}
+                className={`cursor-move bg-white p-2 text-black ${ring} ${node.style}`}
+            >
+                {node.props.text}
+            </Tag>
+        );
+    }
+
+    if (node.type === 'image') {
+        const align =
+            node.props.align === 'center'
+                ? 'mx-auto'
+                : node.props.align === 'right'
+                  ? 'ml-auto'
+                  : '';
+
+        return (
+            <div
+                ref={setNodeRef}
+                style={style}
+                {...attributes}
+                {...listeners}
+                onClick={(e) => {
+                    e.stopPropagation();
+                    onClick();
+                }}
+                className={`cursor-move ${ring} ${node.style}`}
+            >
+                <img
+                    src={node.props.src}
+                    alt={node.props.alt}
+                    style={{ width: node.props.width }}
+                    className={align}
+                    draggable={false}
+                />
+            </div>
         );
     }
 }

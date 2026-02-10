@@ -153,4 +153,7 @@
         border: 2px solid #135bec;
         border-radius: 50%;
     }
+    .cursor-grabbing {
+        cursor: grabbing;
+    }
 }

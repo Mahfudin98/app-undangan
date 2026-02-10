@@ -1,6 +1,6 @@
 import type { EditorNode } from './types';
 
-export type BlockType = 'text';
+export type BlockType = 'text' | 'image';
 
 export function createNode(type: BlockType): EditorNode {
     switch (type) {
@@ -18,6 +18,19 @@ export function createNode(type: BlockType): EditorNode {
                     textAlign: 'center',
                 },
             };
+
+        case 'image':
+            return {
+                id: crypto.randomUUID(),
+                type: 'image',
+                props: {
+                    src: 'https://placehold.co/600x400',
+                    alt: 'Image',
+                    width: 400,
+                    align: 'center',
+                },
+            };
+
         default:
             throw new Error('Unknown block type');
     }

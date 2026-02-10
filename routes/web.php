@@ -19,10 +19,13 @@ Route::get('dashboard', function () {
 // guest
 Route::prefix('invitation')->group(function () {
     Route::post('guest', [InvitationController::class, 'store'])->name('invitation.store');
+    Route::post('{invitation}/publish', [InvitationController::class, 'publish'])->name('invitation.publish');
 
     Route::get('builder/{invitation}', [EditorController::class, 'index'])->name('builder');
     Route::get('builder/{invitation}/data', [EditorController::class, 'data'])->name('builder.data');
     Route::put('builder/{invitation}/save', [EditorController::class, 'save'])->name('builder.save');
 });
+
+Route::get('i/{slug}', [InvitationController::class, 'invitation'])->name('invitation.invitation');
 
 require __DIR__ . '/settings.php';

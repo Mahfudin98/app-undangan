@@ -12,7 +12,7 @@ class EditorController extends Controller
 {
     public function index(Invitation $invitation)
     {
-        return Inertia::render('builder/editor', [
+        return Inertia::render('builder/index', [
             'invitationId' => $invitation->id,
         ]);
     }
@@ -24,6 +24,7 @@ class EditorController extends Controller
         $data = $invitation->editorData;
 
         return response()->json([
+            'data'   => $invitation,
             'schema' => $data?->schema ?? $this->defaultSchema(),
             'status' => $invitation->status,
         ]);

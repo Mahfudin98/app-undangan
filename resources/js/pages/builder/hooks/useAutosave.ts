@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import type { EditorSchema } from './types';
+import type { EditorSchema } from '../helpers/types';
 
 function csrfToken(): string {
     const el = document.querySelector(
